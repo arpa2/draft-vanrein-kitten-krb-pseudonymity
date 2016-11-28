@@ -1,0 +1,541 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" 
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head profile="http://www.w3.org/2006/03/hcard http://dublincore.org/documents/2008/08/04/dc-html/">
+  <meta http-equiv="Content-Type" content="text/html; charset=us-ascii" />
+
+  <title>Pseudonymity Support for Kerberos</title>
+
+  <style type="text/css" title="Xml2Rfc (sans serif)">
+  /*<![CDATA[*/
+	  a {
+	  text-decoration: none;
+	  }
+      /* info code from SantaKlauss at http://www.madaboutstyle.com/tooltip2.html */
+      a.info {
+          /* This is the key. */
+          position: relative;
+          z-index: 24;
+          text-decoration: none;
+      }
+      a.info:hover {
+          z-index: 25;
+          color: #FFF; background-color: #900;
+      }
+      a.info span { display: none; }
+      a.info:hover span.info {
+          /* The span will display just on :hover state. */
+          display: block;
+          position: absolute;
+          font-size: smaller;
+          top: 2em; left: -5em; width: 15em;
+          padding: 2px; border: 1px solid #333;
+          color: #900; background-color: #EEE;
+          text-align: left;
+      }
+	  a.smpl {
+	  color: black;
+	  }
+	  a:hover {
+	  text-decoration: underline;
+	  }
+	  a:active {
+	  text-decoration: underline;
+	  }
+	  address {
+	  margin-top: 1em;
+	  margin-left: 2em;
+	  font-style: normal;
+	  }
+	  body {
+	  color: black;
+	  font-family: verdana, helvetica, arial, sans-serif;
+	  font-size: 10pt;
+	  max-width: 55em;
+	  
+	  }
+	  cite {
+	  font-style: normal;
+	  }
+	  dd {
+	  margin-right: 2em;
+	  }
+	  dl {
+	  margin-left: 2em;
+	  }
+	
+	  ul.empty {
+	  list-style-type: none;
+	  }
+	  ul.empty li {
+	  margin-top: .5em;
+	  }
+	  dl p {
+	  margin-left: 0em;
+	  }
+	  dt {
+	  margin-top: .5em;
+	  }
+	  h1 {
+	  font-size: 14pt;
+	  line-height: 21pt;
+	  page-break-after: avoid;
+	  }
+	  h1.np {
+	  page-break-before: always;
+	  }
+	  h1 a {
+	  color: #333333;
+	  }
+	  h2 {
+	  font-size: 12pt;
+	  line-height: 15pt;
+	  page-break-after: avoid;
+	  }
+	  h3, h4, h5, h6 {
+	  font-size: 10pt;
+	  page-break-after: avoid;
+	  }
+	  h2 a, h3 a, h4 a, h5 a, h6 a {
+	  color: black;
+	  }
+	  img {
+	  margin-left: 3em;
+	  }
+	  li {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  ol {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  ol p {
+	  margin-left: 0em;
+	  }
+	  p {
+	  margin-left: 2em;
+	  margin-right: 2em;
+	  }
+	  pre {
+	  margin-left: 3em;
+	  background-color: lightyellow;
+	  padding: .25em;
+	  }
+	  pre.text2 {
+	  border-style: dotted;
+	  border-width: 1px;
+	  background-color: #f0f0f0;
+	  width: 69em;
+	  }
+	  pre.inline {
+	  background-color: white;
+	  padding: 0em;
+	  }
+	  pre.text {
+	  border-style: dotted;
+	  border-width: 1px;
+	  background-color: #f8f8f8;
+	  width: 69em;
+	  }
+	  pre.drawing {
+	  border-style: solid;
+	  border-width: 1px;
+	  background-color: #f8f8f8;
+	  padding: 2em;
+	  }
+	  table {
+	  margin-left: 2em;
+	  }
+	  table.tt {
+	  vertical-align: top;
+	  }
+	  table.full {
+	  border-style: outset;
+	  border-width: 1px;
+	  }
+	  table.headers {
+	  border-style: outset;
+	  border-width: 1px;
+	  }
+	  table.tt td {
+	  vertical-align: top;
+	  }
+	  table.full td {
+	  border-style: inset;
+	  border-width: 1px;
+	  }
+	  table.tt th {
+	  vertical-align: top;
+	  }
+	  table.full th {
+	  border-style: inset;
+	  border-width: 1px;
+	  }
+	  table.headers th {
+	  border-style: none none inset none;
+	  border-width: 1px;
+	  }
+	  table.left {
+	  margin-right: auto;
+	  }
+	  table.right {
+	  margin-left: auto;
+	  }
+	  table.center {
+	  margin-left: auto;
+	  margin-right: auto;
+	  }
+	  caption {
+	  caption-side: bottom;
+	  font-weight: bold;
+	  font-size: 9pt;
+	  margin-top: .5em;
+	  }
+	
+	  table.header {
+	  border-spacing: 1px;
+	  width: 95%;
+	  font-size: 10pt;
+	  color: white;
+	  }
+	  td.top {
+	  vertical-align: top;
+	  }
+	  td.topnowrap {
+	  vertical-align: top;
+	  white-space: nowrap; 
+	  }
+	  table.header td {
+	  background-color: gray;
+	  width: 50%;
+	  }
+	  table.header a {
+	  color: white;
+	  }
+	  td.reference {
+	  vertical-align: top;
+	  white-space: nowrap;
+	  padding-right: 1em;
+	  }
+	  thead {
+	  display:table-header-group;
+	  }
+	  ul.toc, ul.toc ul {
+	  list-style: none;
+	  margin-left: 1.5em;
+	  margin-right: 0em;
+	  padding-left: 0em;
+	  }
+	  ul.toc li {
+	  line-height: 150%;
+	  font-weight: bold;
+	  font-size: 10pt;
+	  margin-left: 0em;
+	  margin-right: 0em;
+	  }
+	  ul.toc li li {
+	  line-height: normal;
+	  font-weight: normal;
+	  font-size: 9pt;
+	  margin-left: 0em;
+	  margin-right: 0em;
+	  }
+	  li.excluded {
+	  font-size: 0pt;
+	  }
+	  ul p {
+	  margin-left: 0em;
+	  }
+	
+	  .comment {
+	  background-color: yellow;
+	  }
+	  .center {
+	  text-align: center;
+	  }
+	  .error {
+	  color: red;
+	  font-style: italic;
+	  font-weight: bold;
+	  }
+	  .figure {
+	  font-weight: bold;
+	  text-align: center;
+	  font-size: 9pt;
+	  }
+	  .filename {
+	  color: #333333;
+	  font-weight: bold;
+	  font-size: 12pt;
+	  line-height: 21pt;
+	  text-align: center;
+	  }
+	  .fn {
+	  font-weight: bold;
+	  }
+	  .hidden {
+	  display: none;
+	  }
+	  .left {
+	  text-align: left;
+	  }
+	  .right {
+	  text-align: right;
+	  }
+	  .title {
+	  color: #990000;
+	  font-size: 18pt;
+	  line-height: 18pt;
+	  font-weight: bold;
+	  text-align: center;
+	  margin-top: 36pt;
+	  }
+	  .vcardline {
+	  display: block;
+	  }
+	  .warning {
+	  font-size: 14pt;
+	  background-color: yellow;
+	  }
+	
+	
+	  @media print {
+	  .noprint {
+		display: none;
+	  }
+	
+	  a {
+		color: black;
+		text-decoration: none;
+	  }
+	
+	  table.header {
+		width: 90%;
+	  }
+	
+	  td.header {
+		width: 50%;
+		color: black;
+		background-color: white;
+		vertical-align: top;
+		font-size: 12pt;
+	  }
+	
+	  ul.toc a::after {
+		content: leader('.') target-counter(attr(href), page);
+	  }
+	
+	  ul.ind li li a {
+		content: target-counter(attr(href), page);
+	  }
+	
+	  .print2col {
+		column-count: 2;
+		-moz-column-count: 2;
+		column-fill: auto;
+	  }
+	  }
+	
+	  @page {
+	  @top-left {
+		   content: "Internet-Draft"; 
+	  } 
+	  @top-right {
+		   content: "December 2010"; 
+	  } 
+	  @top-center {
+		   content: "Abbreviated Title";
+	  } 
+	  @bottom-left {
+		   content: "Doe"; 
+	  } 
+	  @bottom-center {
+		   content: "Expires June 2011"; 
+	  } 
+	  @bottom-right {
+		   content: "[Page " counter(page) "]"; 
+	  } 
+	  }
+	
+	  @page:first { 
+		@top-left {
+		  content: normal;
+		}
+		@top-right {
+		  content: normal;
+		}
+		@top-center {
+		  content: normal;
+		}
+	  }
+  /*]]>*/
+  </style>
+
+  <link href="#rfc.toc" rel="Contents"/>
+<link href="#rfc.section.1" rel="Chapter" title="1 Introduction"/>
+<link href="#rfc.section.2" rel="Chapter" title="2 Principles and Definitions"/>
+<link href="#rfc.section.3" rel="Chapter" title="3 Procedures and Requirements"/>
+<link href="#rfc.section.4" rel="Chapter" title="4 Efficiency Considerations"/>
+<link href="#rfc.section.5" rel="Chapter" title="5 Privacy Considerations"/>
+<link href="#rfc.section.6" rel="Chapter" title="6 Security Considerations"/>
+<link href="#rfc.section.7" rel="Chapter" title="7 IANA Considerations"/>
+<link href="#rfc.references" rel="Chapter" title="8 Normative References"/>
+<link href="#rfc.authors" rel="Chapter"/>
+
+
+  <meta name="generator" content="xml2rfc version 2.4.8 - http://tools.ietf.org/tools/xml2rfc" />
+  <link rel="schema.dct" href="http://purl.org/dc/terms/" />
+
+  <meta name="dct.creator" content="Van Rein, R." />
+  <meta name="dct.identifier" content="urn:ietf:id:draft-vanrein-kitten-krb-pseudonymity-00" />
+  <meta name="dct.issued" scheme="ISO8601" content="2015-10-10" />
+  <meta name="dct.abstract" content="Kerberos either retains client identity in all its ticket transformations, or it applies rigorous anonymity.  When crossing over to another realm, an intermediate privacy measure is often desired, namely pseudonymity, as described in this specification." />
+  <meta name="description" content="Kerberos either retains client identity in all its ticket transformations, or it applies rigorous anonymity.  When crossing over to another realm, an intermediate privacy measure is often desired, namely pseudonymity, as described in this specification." />
+
+</head>
+
+<body>
+
+  <table class="header">
+    <tbody>
+    
+    	<tr>
+  <td class="left">Network Working Group</td>
+  <td class="right">R. Van Rein</td>
+</tr>
+<tr>
+  <td class="left">Internet-Draft</td>
+  <td class="right">ARPA2.net</td>
+</tr>
+<tr>
+  <td class="left">Intended status: Standards Track</td>
+  <td class="right">October 10, 2015</td>
+</tr>
+<tr>
+  <td class="left">Expires: April 12, 2016</td>
+  <td class="right"></td>
+</tr>
+
+    	
+    </tbody>
+  </table>
+
+  <p class="title">Pseudonymity Support for Kerberos<br />
+  <span class="filename">draft-vanrein-kitten-krb-pseudonymity-00</span></p>
+  
+  <h1 id="rfc.abstract">
+  <a href="#rfc.abstract">Abstract</a>
+</h1>
+<p>Kerberos either retains client identity in all its ticket transformations, or it applies rigorous anonymity.  When crossing over to another realm, an intermediate privacy measure is often desired, namely pseudonymity, as described in this specification.</p>
+<h1 id="rfc.status">
+  <a href="#rfc.status">Status of This Memo</a>
+</h1>
+<p>This Internet-Draft is submitted in full conformance with the provisions of BCP 78 and BCP 79.</p>
+<p>Internet-Drafts are working documents of the Internet Engineering Task Force (IETF).  Note that other groups may also distribute working documents as Internet-Drafts.  The list of current Internet-Drafts is at http://datatracker.ietf.org/drafts/current/.</p>
+<p>Internet-Drafts are draft documents valid for a maximum of six months and may be updated, replaced, or obsoleted by other documents at any time.  It is inappropriate to use Internet-Drafts as reference material or to cite them other than as "work in progress."</p>
+<p>This Internet-Draft will expire on April 12, 2016.</p>
+<h1 id="rfc.copyrightnotice">
+  <a href="#rfc.copyrightnotice">Copyright Notice</a>
+</h1>
+<p>Copyright (c) 2015 IETF Trust and the persons identified as the document authors.  All rights reserved.</p>
+<p>This document is subject to BCP 78 and the IETF Trust's Legal Provisions Relating to IETF Documents (http://trustee.ietf.org/license-info) in effect on the date of publication of this document.  Please review these documents carefully, as they describe your rights and restrictions with respect to this document.  Code Components extracted from this document must include Simplified BSD License text as described in Section 4.e of the Trust Legal Provisions and are provided without warranty as described in the Simplified BSD License.</p>
+
+  
+  <hr class="noprint" />
+  <h1 class="np" id="rfc.toc"><a href="#rfc.toc">Table of Contents</a></h1>
+  <ul class="toc">
+
+  	<li>1.   <a href="#rfc.section.1">Introduction</a></li>
+<li>2.   <a href="#rfc.section.2">Principles and Definitions</a></li>
+<li>3.   <a href="#rfc.section.3">Procedures and Requirements</a></li>
+<li>4.   <a href="#rfc.section.4">Efficiency Considerations</a></li>
+<li>5.   <a href="#rfc.section.5">Privacy Considerations</a></li>
+<li>6.   <a href="#rfc.section.6">Security Considerations</a></li>
+<li>7.   <a href="#rfc.section.7">IANA Considerations</a></li>
+<li>8.   <a href="#rfc.references">Normative References</a></li>
+<li><a href="#rfc.authors">Author's Address</a></li>
+
+
+  </ul>
+
+  <h1 id="rfc.section.1"><a href="#rfc.section.1">1.</a> <a href="#intro" id="intro">Introduction</a></h1>
+<p id="rfc.section.1.p.1">Kerberos' privacy model is not always well-suited for connections to other realms, especially when these are previously unencountered realms that have not earned the client's trust with respect to privacy.  Normally, the client identity as obtained during an AS exchange is always retained by Kerberos.  There is one exception, and that is anonymity <a href="#RFC6112">[RFC6112]</a>, which completely conceals the client's principal name and possibly also its realm.</p>
+<p id="rfc.section.1.p.2">Where anonymity is obvious in concealing the client identity, this section describes a more covert alternative in the form of pseudonymity.  By using a pseudonym, the ticket changes to another client identity, and the chosen identity may be selected specifically for dealing with a particular remote service.  As a result, that remote can trace return visits without knowing what name is used locally, or when accessing other realms and/or services.  As far as the remote realm is concerned, the pseudonym is just a client identity.</p>
+<p id="rfc.section.1.p.3">Pseudonyms can be useful to replace a personal login with that of a group or role, in which case a client can act on behalf of an entity for which it has established access rights.  This is in the service of the remote realm, which is given a more concise view on the client than a mere personally identifying name.  For instance, a remote realm may setup access rights to a group purchasing@EXAMPLE.COM and it is up to the administrators of EXAMPLE.COM which users are permitted to change their client identity to that account (or, informally, which users belong to the purchasing group).  This separation of group management and access to the remote service is often a desirable distribution of responsibilities.</p>
+<h1 id="rfc.section.2"><a href="#rfc.section.2">2.</a> <a href="#principles" id="principles">Principles and Definitions</a></h1>
+<p id="rfc.section.2.p.1">Pseudonymity is applied during a TGS exchange.  The client requests or permits the KDC to change its identity supplied in the TGT into another identity in the returned ticket.  Without pseudonymity (or anonymity) the KDC simply copies this identity from the TGT to the returned ticket.</p>
+<p id="rfc.section.2.p.2">Clients can make implicit or explicit requests for a new client identity.  An implicit request permits the KDC to apply whatever policies it has for a TGS, and an explicit request asks the KDC to set a particular client principal name.  Explicit pseudonymity requests can be used with restrictive KDC policies, such as demanding a client identity to be selected from a set of possibilities.</p>
+<p id="rfc.section.2.p.3">The application of pseudonymity can be realm-neutral or realm-changing.  Realm-neutral means that the realm of the TGT included in the TGS-REQ is the same as the client identity's realm.  Realm-changing means that those realms differ.  When applying pseudonymity, the client realm is replaced with the TGT realm, which only has an impact in the realm-changing case.  It is not permitted to apply pseudonimity more than once in a realm-changing manner, to avoid arbitrary proxying between realms; a remote realm shall only welcome a client identity from its login realm and a client shall not accept arbitrary relaying of its identity to realms beyond the ones it uses directly.  There is no limitation on realm-neutral pseudonymity, neither before nor after realm-changing pseudonymity.</p>
+<p id="rfc.section.2.p.4">To test whether a KDC is willing to support pseudonymity, the client may set the "pseudonymity" flag in the kdc-options field of its AS-REQ.  When the KDC produces a ticket, it MAY respond to this KDC option by setting the "pseudonymity" ticket flag; if it does, it is a statement that the KDC is supportive of pseudonymity.</p>
+<p id="rfc.section.2.p.5">For explicit pseudonymity, the requested client principal name is included in the optional cname field of the TGS-REQ; this field is not normally included in this message, but may be used after assuring that the KDC supports pseudonyms.  Explicit requests are unacceptable after applying realm-changing pseudonymity; this leaves room for a last realm-neutral change of the client identity just before crossing over to anoter realm, namely when a TGS-REQ returns a server referral.</p>
+<h1 id="rfc.section.3"><a href="#rfc.section.3">3.</a> <a href="#procedure" id="procedure">Procedures and Requirements</a></h1>
+<p id="rfc.section.3.p.1">A client MAY always send a TGS-REQ with a "pseudonymity" KDC option, even when there is no "pseudonymity" ticket flag.  KDCs unsupportive of pseudonymity will silently ignore the unknown KDC option.</p>
+<p id="rfc.section.3.p.2">The KDC does not apply pseudonymity without "pseudonymity" KDC Options in the TGS-REQ; however, if psuedonymity is required by local policy, it MAY return a KRB-ERROR with code TODO</p>
+<p id="rfc.section.3.p.3">A number of rules MUST be applied by the KDC if it receives a TGS-REQ with the "pseudonymity" KDC option: </p>
+
+<ol>
+  <li>For explicit psuedonymity, the TGT must have the "pseudonymity" flag set; if not, it responds with KRB-ERROR code KDC_ERR_WRONG_REALM (because realm-changing pseudonymity appears to have been applied already).</li>
+  <li>For realm-changing pseudonymity, the TGT must have the "pseudonymity" flag set; otherwise, the request for pseudonymity is ignored if it is implicit, or leads to KDC_ERR_SVC_UNAVAILABLE if it is explicit.</li>
+  <li>The KDC may apply local policy; for implicit pseudonymity, it silently ignores disapproved requests; for explict pseudonymity, it responds to disapproved requests with KRB-ERROR code KDC_ERR_C_PRINCIPAL_UNKNOWN if it policy forbids the use of pseudonymity, or KDC_ERR_PRINCIPAL_NOT_UNIQUE (TODO:e-data) if it is permitted but lacks guidance on what to choose.  The latter error message may also be generated if zero or one potential principals were found, but other things stop it, such as an explicit confirmation of setup by the end user through an external mechanism.</li>
+  <li>As a special case of the foregoing, external pseudonymity with the special name of type NT-UNKNOWN and zero components in the name string is permitted by default policy and cannot be setup with a pseudonym by the user, so it always triggers the aforementioned KDC_ERR_PRINCIPAL_NOT_UNIQUE error reply.</li>
+  <li>TODO: Define special error codes for pseudonymity; overloading existing ones isn't proper</li>
+  <li>When the KDC applies realm-changing pseudonymity, it MUST clear the "pseudonymity" flag in the returned ticket.  This serves two purposes.  First, it drops the knowledge of KDC-supported pseudonymity for the new realm.  Second, it ensures that realm-changing pseudonymity is applied at most once.  In all other cases, when the KDC returns a ticket it MUST copy the "pseudonymity" ticket flag from the TGT in the TGS-REQ.</li>
+</ol>
+<p id="rfc.section.3.p.4">Clients supportive of pseudonymity MUST ensure that the "pseudonymity" flag in a TGS-REP is never set unless the "pseudonymity" KDC option was set in the corresponding TGS-REQ.</p>
+<p id="rfc.section.3.p.5">Clients supportive of pseudonymity SHOULD process the "pseudonymity" flag in the TGS-REP.  When it is set, the client identity in the TGS-REP may have changed, and give rise to somewhat different handling of the returned ticket.  Those clients MUST also verify that the client identity is unchanged when the "pseudonymity" flag in the TGS-REP is not set.</p>
+<p id="rfc.section.3.p.6">Clients supportive of pseudonymity MUST notice realm-changing pseudonymity in a TGS-REP, and then ensure that the "pseudonymity" ticket flag is reset on the returned ticket; they MUST NOT accept realm-changing pseudonymity based on TGTs without "pseudonymity" ticket flag, and they MUST NOT request explicit pseudonymity based on TGTs without "pseudonymity" ticket flag.  They MAY request realm-changing implicit pseudonymity based on TGTs without "pseudonymity" ticket flag, but this will be silently ignored by the KDC.</p>
+<p id="rfc.section.3.p.7">These specifications permit arbitrary rewrites of client principal names within the local realm to which the client signed up, either at the initiative of the client or the KDC.  This means that a database of pseudonyms can be set up in the client and/or the KDC.  The KDC is probably most useful when it applies pseudonymity during a request for a service ticket, and even more likely when it decides that realm crossover is involved in finding that ticket.</p>
+<p id="rfc.section.3.p.8">There are two situations in which the KDC explicitly lists pseudonyms that are acceptable for a request, as part of an error message KDC_ERR_PRINCIPAL_NOT_UNIQUE with an e-data field containing an ASN.1 SEQUENCE OF PrincipalName in DER encoding.  TODO: encryption? This reply can be sent when the client needs it, to which end it sends an explicit pseudonymity request with a cname holding an NT-UNKNOWN name type.  Alternatively, the KDC may generate this message when its policy requires pseudonymity but lacks policies to select one pseudonym; this requires that the "pseudonymity" KDC option is set in the TGS-REQ; it is especially of interest when the KDC is about to release a realm crossover ticket from the client's realm to a service realm.  The e-data may hold an empty sequence to signal that no options exist; it may contain one or more PrincipalNames when it lacks the policy setup to make a choice.</p>
+<p id="rfc.section.3.p.9">Although it may seem unnatural to permit pseudonymity to foreign realms as well, it can actually be quite helpful.  First, since it is always implicit pseudonymity, the remote KDC cannot create a "more unique" representation of the client identity; it is however able to group clients.  Think of time-constrained test rides in public or free-trial accounts, or think of temporary gold or silver status access.  This sort of use case enables the service to provide previews without demanding clients to setup accounts upfront.  This provides a friendlier, and more useful way to explore new services.  The service on the other hand, avoids a long list of one-time users that never return because they don't like the functionality on offer.  With this in mind, it is recommended to continue to send the "pseudonymity" KDC option on any TGS-REQ to a remote realm, so long as the TGT has the "pseudonymity" flag set.</p>
+<p id="rfc.section.3.p.10">Note that foreign realms may hide information in the tickets that they return, but this is not likely to be very useful; tickets are not constantly updated during use, and they are discarded after a brief usage period.  These properties makes them far less potent than other privacy alerts, such as browser cookies.</p>
+<p id="rfc.section.3.p.11">TODO: Use Anonymous Kerberos [RFC6112] as a checklist, for instance refer to it for its handling of AuthorizationData.</p>
+<h1 id="rfc.section.4"><a href="#rfc.section.4">4.</a> <a href="#efficiency" id="efficiency">Efficiency Considerations</a></h1>
+<p id="rfc.section.4.p.1">TODO:WRITE; lightweight mechanism, choice of central setup in KDC</p>
+<h1 id="rfc.section.5"><a href="#rfc.section.5">5.</a> <a href="#privacy" id="privacy">Privacy Considerations</a></h1>
+<p id="rfc.section.5.p.1">TODO:WRITE; pseudonym appears like the right person; identities tailored to targeted service; choice of decentral setup in client; remote realm cannot run away and make us move from realm to realm; remote realm can hardly store interesting information in the tickets</p>
+<h1 id="rfc.section.6"><a href="#rfc.section.6">6.</a> <a href="#security" id="security">Security Considerations</a></h1>
+<p id="rfc.section.6.p.1">TODO:WRITE; impersonation guarded by KDC (TODO: spec); remote realm might do this in hidden ticket info anyway, or may use another identity, which seems harmless?</p>
+<h1 id="rfc.section.7"><a href="#rfc.section.7">7.</a> <a href="#iana" id="iana">IANA Considerations</a></h1>
+<p id="rfc.section.7.p.1">TODO:WRITE; "pseudonymity" KDC option; "pseudonymity" ticket flag</p>
+<h1 id="rfc.references"><a href="#rfc.references">8.</a> Normative References</h1>
+<table>
+  <tbody>
+    <tr>
+      <td class="reference">
+        <b id="RFC6112">[RFC6112]</b>
+      </td>
+      <td class="top"><a>Zhu, L.</a>, <a>Leach, P.</a> and <a>S. Hartman</a>, "<a href="http://tools.ietf.org/html/rfc6112">Anonymity Support for Kerberos</a>", RFC 6112, DOI 10.17487/RFC6112, April 2011.</td>
+    </tr>
+  </tbody>
+</table>
+<h1 id="rfc.authors">
+  <a href="#rfc.authors">Author's Address</a>
+</h1>
+<div class="avoidbreak">
+  <address class="vcard">
+	<span class="vcardline">
+	  <span class="fn">Rick van Rein</span> 
+	  <span class="n hidden">
+		<span class="family-name">Van Rein</span>
+	  </span>
+	</span>
+	<span class="org vcardline">ARPA2.net</span>
+	<span class="adr">
+	  <span class="vcardline">Haarlebrink 5</span>
+
+	  <span class="vcardline">
+		<span class="locality">Enschede</span>,  
+		<span class="region">Overijssel</span> 
+		<span class="code">7544 WP</span>
+	  </span>
+	  <span class="country-name vcardline">The Netherlands</span>
+	</span>
+	<span class="vcardline">EMail: <a href="mailto:rick@openfortress.nl">rick@openfortress.nl</a></span>
+
+  </address>
+</div>
+
+</body>
+</html>
